@@ -42,23 +42,32 @@ var todos = {
       self.render(todo);
     },
 
+
+    /*
+     * Event when a checkbox is checked or unchecked
+     * @param event e
+     */
     checked: function(e){
       var checkbox = event.target;
 
+      // Get ID from data attribute on checkbox
       var todo = {
           id: Number(checkbox.getAttribute('data-todo-id')),
           complete: false
       }
 
+      // If the checkbox is checked, set the todo to complete
       if (checkbox.checked) {
         todo.complete = true;
       }
 
+      // Update todo
       todos.update(todo);
     },
 
     /*
     * Updates a todo
+    * @param object todo
     */
     update: function(todo) {
       // Set url for request
@@ -71,7 +80,6 @@ var todos = {
       // Open and send the request
       xhr.open("POST", url, false);
       xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-
       xhr.send(JSON.stringify(todo));
     },
 
@@ -132,7 +140,7 @@ var todos = {
         // Create new list item
         var li = document.createElement('li');
 
-        // Add todo content
+        // Add todo content to readonly text input
         var input = document.createElement('input');
         input.type = 'text';
         input.value = todo.content;
@@ -142,7 +150,11 @@ var todos = {
         // Create checkbox input
         var checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
+
+        // Add the todo id as a data attribute on checkbox
         checkbox.setAttribute('data-todo-id', todo.id);
+
+        // Add event listener when chekbox is checked/unchecked
         checkbox.addEventListener('change', todos.checked);
 
         // If todo is complete
@@ -159,6 +171,10 @@ var todos = {
     }
 };
 
+/*
+ * Run on page load
+ */
 window.onload = function() {
+  // Fetch list of todos from server
   todos.fetch();
 };
