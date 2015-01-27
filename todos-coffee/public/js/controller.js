@@ -17,7 +17,7 @@ TodoController = (function() {
       }),
       contentType: "application/json",
       success: function(data) {
-        self.add().render();
+        self.add(data).render();
         return $('#new-todo').val("");
       },
       error: function() {

@@ -22,7 +22,7 @@ class TodoController
       data: JSON.stringify({content: content})
       contentType: "application/json"
       success: (data) ->
-        self.add().render()
+        self.add(data).render()
 
         # Reset the input content
         $('#new-todo').val ""
