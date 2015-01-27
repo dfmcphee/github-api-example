@@ -19,7 +19,7 @@ gulp.task('sass', function () {
 
 gulp.task('coffee', function() {
   gulp.src('./public/coffee/*.coffee')
-  .pipe(coffee().on('error', gutil.log))
+  .pipe(coffee({bare: true}).on('error', gutil.log))
   .pipe(gulp.dest('./public/js/'))
 });
 
