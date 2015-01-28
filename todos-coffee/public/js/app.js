@@ -22,8 +22,10 @@ $(function() {
   $('#todo-list').on("dblclick", "input[type='text']", function(e) {
     var ro;
     ro = $(this).prop('readonly');
-    $(this).prop('readonly', !ro).focus();
-    $(this).parent().append('<button class="button">Delete</button>');
+    if (ro) {
+      $(this).prop('readonly', !ro).focus();
+      $(this).parent().append('<button class="button">Delete</button>');
+    }
   });
   $('#todo-list').on("blur", "input[type='text']", function(e) {
     var id, input, todo;

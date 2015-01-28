@@ -31,8 +31,9 @@ $ ->
   # Add event listener when text input is double clicked
   $('#todo-list').on "dblclick", "input[type='text']", (e) ->
     ro = $(this).prop('readonly')
-    $(this).prop('readonly', !ro).focus()
-    $(this).parent().append('<button class="button">Delete</button>')
+    if ro
+      $(this).prop('readonly', !ro).focus()
+      $(this).parent().append('<button class="button">Delete</button>')
     return
 
   # Add event when todo input is blurred
