@@ -7,16 +7,42 @@ $(function() {
   });
   $('#new-todo').keypress(function(e) {
     if (e.which === 13) {
-      return controller.add();
+      return controller.create();
     }
   });
-  return $('#todo-list').on("click", "input[type='checkbox']", function(e) {
+  $('#todo-list').on("click", "input[type='checkbox']", function(e) {
     var checkbox, todo;
     checkbox = e.target;
     todo = {
-      id: Number($(checkbox).data("todo-id")),
+      id: Number($(checkbox).closest('li').data("todo-id")),
       complete: checkbox.checked
     };
     controller.update(todo);
+  });
+  $('#todo-list').on("dblclick", "input[type='text']", function(e) {
+    var ro;
+    ro = $(this).prop('readonly');
+    $(this).prop('readonly', !ro).focus();
+    $(this).parent().append('<button class="button">Delete</button>');
+  });
+  $('#todo-list').on("blur", "input[type='text']", function(e) {
+    var id, input, todo;
+    input = e.target;
+    id = Number($(input).closest('li').data("todo-id"));
+    todo = {
+      id: id,
+      complete: $('#todo-complete-' + id).checked,
+      content: $(input).val()
+    };
+    controller.update(todo);
+    $(input).prop('readonly', true);
+    setTimeout((function() {
+      $(input).parent().find('button').remove();
+    }), 100);
+  });
+  return $('#todo-list').on("click", "button", function(e) {
+    var id;
+    id = Number($(this).closest('li').data("todo-id"));
+    controller.remove(id);
   });
 });

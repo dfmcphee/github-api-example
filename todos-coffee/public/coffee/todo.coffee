@@ -12,7 +12,10 @@ class Todo
   #
   render: ->
     # Create new list item
-    li = $("<li></li>")
+    li = $("<li id='todo-" + @id + "'></li>")
+
+    # Add the todo id as a data attribute
+    li.attr "data-todo-id", @id
 
     # Add todo content to readonly text input
     input = $("<input type='text' readonly />")
@@ -21,19 +24,16 @@ class Todo
 
     # Create checkbox input
     checkbox_wrapper = $("<div class='checkbox'>")
-    checkbox = $("<input type='checkbox' id='todo-" + @id + "' />")
+    checkbox = $("<input type='checkbox' id='todo-complete-" + @id + "' />")
 
     # Set checkbox checked
     checkbox.prop "checked", @complete
-
-    # Add the todo id as a data attribute on checkbox
-    checkbox.attr "data-todo-id", @id
 
     # Add checkbox to wrapper
     checkbox_wrapper.append checkbox
 
     # Add label to wrapper
-    checkbox_wrapper.append "<label for='todo-" + @id + "'></label>"
+    checkbox_wrapper.append "<label for='todo-complete-" + @id + "'></label>"
 
     # Add checkbox wrapper to list item
     li.append checkbox_wrapper
@@ -42,11 +42,30 @@ class Todo
     $("#todo-list").append li
     return
 
+  #
+  # Remove a todo item
+  #
+  remove: ->
+    # Set url for request
+    url = "/todos/remove"
+
+    # Send ajax POST request
+    $.ajax url,
+      type: "POST"
+      data: JSON.stringify({id: @id})
+      contentType: "application/json"
+      success: (data) ->
+        $("#todo-" + data.id).remove()
+        return
+      error: ->
+        # Output error if request fails
+        alert "Something went wrong. Please try again."
+    return
 
   #
-  # Updates a todo
+  # Updates a todo on the server
   #
-  update: ->
+  publish: ->
     # Set url for request
     url = "/todos/update"
 

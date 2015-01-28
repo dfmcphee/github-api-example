@@ -9,7 +9,7 @@ TodoController = (function() {
     var content, self, url;
     self = this;
     content = $("#new-todo").val();
-    url = "http://localhost:3000/todos/create";
+    url = "/todos/create";
     $.ajax(url, {
       type: "POST",
       data: JSON.stringify({
@@ -33,10 +33,51 @@ TodoController = (function() {
     return todo;
   };
 
+  TodoController.prototype.remove = function(id) {
+    var todo, _i, _len, _ref;
+    _ref = this.collection;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      todo = _ref[_i];
+      if (todo.id === id) {
+        todo.remove();
+        this.collection.splice(this.collection.indexOf(todo), 1);
+        return true;
+      }
+    }
+    return false;
+  };
+
+  TodoController.prototype.findById = function(id) {
+    var todo, _i, _len, _ref;
+    _ref = this.collection;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      todo = _ref[_i];
+      if (todo.id === id) {
+        return todo;
+      }
+    }
+    return false;
+  };
+
+  TodoController.prototype.update = function(updatedTodo) {
+    var todo, _i, _len, _ref;
+    _ref = this.collection;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      todo = _ref[_i];
+      if (todo.id === updatedTodo.id) {
+        todo.complete = updatedTodo.complete;
+        todo.content = updatedTodo.content;
+        todo.publish();
+        return true;
+      }
+    }
+    return false;
+  };
+
   TodoController.prototype.fetch = function() {
     var self, url;
     self = this;
-    url = "http://localhost:3000/todos/";
+    url = "/todos/";
     $.ajax(url, {
       type: "GET",
       contentType: "application/json",

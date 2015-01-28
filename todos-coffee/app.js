@@ -39,13 +39,39 @@ app.post('/todos/create', function(req, res) {
 // Complete a todo
 app.post('/todos/update', function(req, res) {
   // Make sure request includes id and a todo exists with that id
-  if (typeof(req.body.id) !== 'undefined' && todos[req.body.id]) {
-    // Change todo completion
-    todos[req.body.id].complete = req.body.complete;
+  if (typeof(req.body.id) !== 'undefined') {
+    for (var i=0; i<todos.length; i++) {
+      if (todos[i].id === req.body.id) {
+        if (typeof(req.body.complete) !== 'undefined') {
+          todos[i].complete = req.body.complete;
+        }
+        if (typeof(req.body.content) !== 'undefined') {
+          todos[i].content = req.body.content;
+        }
+      }
+    }
   }
 
   // Send response
   res.send(todos);
+});
+
+// Complete a todo
+app.post('/todos/remove', function(req, res) {
+  var todo = false;
+
+  // Make sure request includes id and a todo exists with that id
+  if (typeof(req.body.id) !== 'undefined') {
+    for (var i=0; i<todos.length; i++) {
+      if (todos[i].id === req.body.id) {
+        todo = todos[i];
+        todos.splice(i, 1);
+      }
+    }
+  }
+
+  // Send response
+  res.send(todo);
 });
 
 // Set port for server
