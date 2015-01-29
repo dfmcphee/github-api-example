@@ -1,10 +1,10 @@
 var Todo;
 
 Todo = (function() {
-  function Todo(todo) {
-    this.id = todo.id;
-    this.content = todo.content;
-    this.complete = todo.complete;
+  function Todo(id, content, complete) {
+    this.id = id;
+    this.content = content;
+    this.complete = complete;
   }
 
   Todo.prototype.render = function() {
@@ -24,16 +24,17 @@ Todo = (function() {
   };
 
   Todo.prototype.remove = function() {
-    var url;
+    var id, url;
     url = "/todos/remove";
+    id = this.id;
     $.ajax(url, {
       type: "POST",
       data: JSON.stringify({
-        id: this.id
+        id: id
       }),
       contentType: "application/json",
       success: function(data) {
-        $("#todo-" + data.id).remove();
+        $("#todo-" + id).remove();
       },
       error: function() {
         return alert("Something went wrong. Please try again.");

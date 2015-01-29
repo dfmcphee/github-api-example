@@ -1,23 +1,23 @@
 $(function() {
-  var controller;
-  controller = new TodoController;
-  controller.fetch();
+  var todoList;
+  todoList = new List;
+  todoList.fetch();
   $(document).on("click", "#add-todo", function() {
-    controller.create();
+    todoList.create();
   });
   $('#new-todo').keypress(function(e) {
     if (e.which === 13) {
-      return controller.create();
+      return todoList.create();
     }
   });
   $('#todo-list').on("click", "input[type='checkbox']", function(e) {
     var checkbox, todo;
     checkbox = e.target;
     todo = {
-      id: Number($(checkbox).closest('li').data("todo-id")),
+      id: $(checkbox).closest('li').data("todo-id"),
       complete: checkbox.checked
     };
-    controller.update(todo);
+    todoList.update(todo);
   });
   $('#todo-list').on("dblclick", "input[type='text']", function(e) {
     var ro;
@@ -30,21 +30,36 @@ $(function() {
   $('#todo-list').on("blur", "input[type='text']", function(e) {
     var id, input, todo;
     input = e.target;
-    id = Number($(input).closest('li').data("todo-id"));
+    id = $(input).closest('li').data("todo-id");
     todo = {
       id: id,
       complete: $('#todo-complete-' + id).checked,
       content: $(input).val()
     };
-    controller.update(todo);
+    todoList.update(todo);
     $(input).prop('readonly', true);
     setTimeout((function() {
       $(input).parent().find('button').remove();
     }), 100);
   });
+  $('#todo-list').on("keyup", "input[type='text']", function(e) {
+    var id, input, todo;
+    if (e.which === 13) {
+      input = $(':focus');
+      id = $(input).closest('li').data("todo-id");
+      todo = {
+        id: id,
+        complete: $('#todo-complete-' + id).checked,
+        content: $(input).val()
+      };
+      todoList.update(todo);
+      $(input).prop('readonly', true);
+      return $(input).parent().find('button').remove();
+    }
+  });
   return $('#todo-list').on("click", "button", function(e) {
     var id;
-    id = Number($(this).closest('li').data("todo-id"));
-    controller.remove(id);
+    id = $(this).closest('li').data("todo-id");
+    todoList.remove(id);
   });
 });

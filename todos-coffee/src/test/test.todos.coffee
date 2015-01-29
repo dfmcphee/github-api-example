@@ -2,55 +2,60 @@ describe "Library Tests", ->
   before ->
 
   it "Should be able to add a new Todo", ->
-    controller = new TodoController()
-    controller.add
-      id: 1
+    list = new List()
+    todo =
+      _id: "1"
       content: "test todo"
       complete: false
+    list.add(todo)
 
-    assert controller.collection.length is 1
+    assert list.todos.length is 1
     return
 
   it "Should initialize todo correctly", ->
-    controller = new TodoController()
-    controller.add
-      id: 1
+    list = new List()
+    todo =
+      _id: "1"
       content: "test content"
-      complete: true
+      complete: false
+    list.add(todo)
 
-    assert controller.collection[0].content is "test content"
+    assert list.todos[0].content is "test content"
     return
 
   it "Should be able to remove a Todo", ->
-    controller = new TodoController()
-    controller.add
-      id: 1
+    list = new List()
+    todo =
+      _id: "1"
       content: "test todo"
       complete: false
+    list.add(todo)
 
-    controller.remove 1
-    assert controller.collection.length is 0
+    list.remove("1")
+    assert list.todos.length is 0
     return
 
   it "Should be able to search for a Todo", ->
-    controller = new TodoController()
-    controller.add
-      id: 1
+    list = new List()
+    todo =
+      _id: "1"
       content: "test todo"
       complete: false
+    list.add(todo)
 
-    result = controller.findById(1)
-    assert result is controller.collection[0]
+    result = list.findById("1")
+    assert result is list.todos[0]
     return
 
   it "Search should return false if no results", ->
-    controller = new TodoController()
-    controller.add
-      id: 1
+    list = new List()
+    todo =
+      _id: "1"
       content: "test todo"
       complete: false
-
-    result = controller.findById(3)
+    list.add(todo)
+    
+    result = list.findById("3")
     assert result is false
     return
 

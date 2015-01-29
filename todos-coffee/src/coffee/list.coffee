@@ -36,7 +36,7 @@ class List
   #
   add: (data) ->
     # Initialize a new Todo
-    todo = new Todo(data)
+    todo = new Todo(data._id, data.content, data.complete)
 
     # Add it to the todos
     @todos.push(todo)
@@ -104,7 +104,7 @@ class List
       success: (data) ->
         # Add fetched todos to todos
         for todo in data
-          self.todos.push new Todo(todo)
+          self.todos.push new Todo(todo._id, todo.content, todo.complete)
 
         # Render todos todos
         self.list()

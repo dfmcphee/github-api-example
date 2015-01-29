@@ -10,4 +10,6 @@ Run `npm install`
 
 Run `gulp` to start the server
 
-Visit [http://localhost:3000](http://localhost:3000) in a browser
+To see the example go to [http://localhost:3000](http://localhost:3000)
+
+To run the tests go to [http://localhost:3000](http://localhost:3000/test)

@@ -21,7 +21,7 @@ $ ->
 
     # Get ID from data attribute on checkbox
     todo =
-      id: Number $(checkbox).closest('li').data("todo-id")
+      id: $(checkbox).closest('li').data("todo-id")
       complete: checkbox.checked
 
     # Update todo
@@ -39,7 +39,7 @@ $ ->
   # Add event when todo input is blurred
   $('#todo-list').on "blur", "input[type='text']", (e) ->
     input = e.target
-    id = Number $(input).closest('li').data("todo-id")
+    id = $(input).closest('li').data("todo-id")
 
     todo =
       id: id
@@ -55,8 +55,26 @@ $ ->
     ), 100
     return
 
+  # Add event listener when enter key is pressed while editing
+  $('#todo-list').on "keyup", "input[type='text']", (e) ->
+    if (e.which == 13)
+      # Get id from focussed input
+      input = $(':focus')
+      id = $(input).closest('li').data("todo-id")
+
+      # Update todo content
+      todo =
+        id: id
+        complete: $('#todo-complete-' + id).checked
+        content: $(input).val()
+
+      # Update todo
+      todoList.update(todo)
+      $(input).prop('readonly', true)
+      $(input).parent().find('button').remove()
+
   # Add event when todo delete is clicked
   $('#todo-list').on "click", "button", (e) ->
-    id = Number $(this).closest('li').data("todo-id")
+    id = $(this).closest('li').data("todo-id")
     todoList.remove(id)
     return

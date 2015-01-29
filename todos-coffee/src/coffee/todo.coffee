@@ -2,10 +2,7 @@
 # Todo
 #
 class Todo
-  constructor: (todo) ->
-    @id = todo.id
-    @content = todo.content
-    @complete = todo.complete
+  constructor: (@id, @content, @complete) ->
 
   #
   # Renders a todo item
@@ -48,14 +45,15 @@ class Todo
   remove: ->
     # Set url for request
     url = "/todos/remove"
+    id = @id
 
     # Send ajax POST request
     $.ajax url,
       type: "POST"
-      data: JSON.stringify({id: @id})
+      data: JSON.stringify({id: id})
       contentType: "application/json"
       success: (data) ->
-        $("#todo-" + data.id).remove()
+        $("#todo-" + id).remove()
         return
       error: ->
         # Output error if request fails
