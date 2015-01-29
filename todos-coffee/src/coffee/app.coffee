@@ -1,19 +1,19 @@
 # On document ready
 $ ->
-  controller = new TodoController
+  todoList = new List
 
   # Fetch list of todos
-  controller.fetch()
+  todoList.fetch()
 
   # Add event listener when add button is clicked
   $(document).on "click", "#add-todo", ->
-    controller.create()
+    todoList.create()
     return
 
   # Add event listener when enter key is pressed
   $('#new-todo').keypress (e) ->
     if (e.which == 13)
-      controller.create()
+      todoList.create()
 
   # Add event listener when chekbox is checked/unchecked
   $('#todo-list').on "click", "input[type='checkbox']", (e) ->
@@ -25,7 +25,7 @@ $ ->
       complete: checkbox.checked
 
     # Update todo
-    controller.update(todo)
+    todoList.update(todo)
     return
 
   # Add event listener when text input is double clicked
@@ -47,7 +47,7 @@ $ ->
       content: $(input).val()
 
     # Update todo
-    controller.update(todo)
+    todoList.update(todo)
     $(input).prop('readonly', true)
     setTimeout ( ->
       $(input).parent().find('button').remove()
@@ -58,5 +58,5 @@ $ ->
   # Add event when todo delete is clicked
   $('#todo-list').on "click", "button", (e) ->
     id = Number $(this).closest('li').data("todo-id")
-    controller.remove(id)
+    todoList.remove(id)
     return

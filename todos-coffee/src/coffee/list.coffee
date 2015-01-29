@@ -1,8 +1,8 @@
 #
-# TodoController
+# List of todos
 #
-class TodoController
-  constructor: (@collection=[]) ->
+class List
+  constructor: (@todos=[]) ->
 
   #
   # Creates a new todo
@@ -38,8 +38,8 @@ class TodoController
     # Initialize a new Todo
     todo = new Todo(data)
 
-    # Add it to the collection
-    @collection.push(todo)
+    # Add it to the todos
+    @todos.push(todo)
 
     return todo
 
@@ -48,12 +48,12 @@ class TodoController
   #
   remove: (id) ->
     # Loop through todos
-    for todo in @collection
+    for todo in @todos
       # If the id matches
       if todo.id == id
-        # Remove from the collection
+        # Remove from the todos
         todo.remove()
-        @collection.splice(@collection.indexOf(todo), 1)
+        @todos.splice(@todos.indexOf(todo), 1)
         return true
 
     return false
@@ -63,7 +63,7 @@ class TodoController
   #
   findById: (id) ->
     # Loop through todos
-    for todo in @collection
+    for todo in @todos
       # If the id matches
       if todo.id == id
         # Return the todo
@@ -76,7 +76,7 @@ class TodoController
   #
   update: (updatedTodo) ->
     # Loop through todos
-    for todo in @collection
+    for todo in @todos
       # If the id matches
       if todo.id == updatedTodo.id
         # Update it
@@ -102,11 +102,11 @@ class TodoController
       type: "GET"
       contentType: "application/json"
       success: (data) ->
-        # Add fetched todos to collection
+        # Add fetched todos to todos
         for todo in data
-          self.collection.push(new Todo(todo))
+          self.todos.push new Todo(todo)
 
-        # Render collection todos
+        # Render todos todos
         self.list()
       error: ->
         # Output error if request fails
@@ -114,13 +114,13 @@ class TodoController
     return
 
   #
-  # Render collection of todos
+  # Render list of todos
   #
   list: ->
     # Remove any exisiting list elements
     $('#todo-list').empty()
-    # Loop through collection of todos
-    for todo in @collection
+    # Loop through todos of todos
+    for todo in @todos
       # And render each one
       todo.render()
 
