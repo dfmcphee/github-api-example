@@ -12,4 +12,4 @@ Run `gulp` to start the server
 
 To see the example go to [http://localhost:3000](http://localhost:3000)
 
-To run the tests go to [http://localhost:3000](http://localhost:3000/test)
+To run the tests go to [http://localhost:3000/test](http://localhost:3000/test)
