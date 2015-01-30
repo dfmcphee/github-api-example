@@ -64,7 +64,7 @@ List = (function() {
     _ref = this.todos;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       todo = _ref[_i];
-      if (todo.id === updatedTodo.id) {
+      if (todo.id === updatedTodo._id) {
         todo.complete = updatedTodo.complete;
         todo.content = updatedTodo.content;
         todo.publish();

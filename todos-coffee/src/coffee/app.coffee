@@ -42,7 +42,7 @@ $ ->
     id = $(input).closest('li').data("todo-id")
 
     todo =
-      id: id
+      _id: id
       complete: $('#todo-complete-' + id).checked
       content: $(input).val()
 
@@ -64,7 +64,7 @@ $ ->
 
       # Update todo content
       todo =
-        id: id
+        _id: id
         complete: $('#todo-complete-' + id).checked
         content: $(input).val()
 

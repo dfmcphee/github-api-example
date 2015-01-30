@@ -78,7 +78,7 @@ class List
     # Loop through todos
     for todo in @todos
       # If the id matches
-      if todo.id == updatedTodo.id
+      if todo.id == updatedTodo._id
         # Update it
         todo.complete = updatedTodo.complete
         todo.content = updatedTodo.content

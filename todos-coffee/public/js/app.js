@@ -32,7 +32,7 @@ $(function() {
     input = e.target;
     id = $(input).closest('li').data("todo-id");
     todo = {
-      id: id,
+      _id: id,
       complete: $('#todo-complete-' + id).checked,
       content: $(input).val()
     };
@@ -48,7 +48,7 @@ $(function() {
       input = $(':focus');
       id = $(input).closest('li').data("todo-id");
       todo = {
-        id: id,
+        _id: id,
         complete: $('#todo-complete-' + id).checked,
         content: $(input).val()
       };
